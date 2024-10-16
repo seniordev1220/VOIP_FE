@@ -9,39 +9,8 @@ import AuthGuard from 'utils/route-guard/AuthGuard';
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 const DashboardAnalytics = Loadable(lazy(() => import('views/dashboard/Analytics')));
 
-// forms component routing
-const FrmComponentsTextfield = Loadable(lazy(() => import('views/forms/components/TextField')));
-const FrmComponentsButton = Loadable(lazy(() => import('views/forms/components/Button')));
-const FrmComponentsCheckbox = Loadable(lazy(() => import('views/forms/components/Checkbox')));
-const FrmComponentsRadio = Loadable(lazy(() => import('views/forms/components/Radio')));
-const FrmComponentsSwitch = Loadable(lazy(() => import('views/forms/components/Switch')));
-const FrmComponentsAutoComplete = Loadable(lazy(() => import('views/forms/components/AutoComplete')));
-const FrmComponentsSlider = Loadable(lazy(() => import('views/forms/components/Slider')));
-const FrmComponentsDateTime = Loadable(lazy(() => import('views/forms/components/DateTime')));
-
-// forms plugins layout
-const FrmLayoutLayout = Loadable(lazy(() => import('views/forms/layouts/Layouts')));
-const FrmLayoutMultiColumnForms = Loadable(lazy(() => import('views/forms/layouts/MultiColumnForms')));
-const FrmLayoutActionBar = Loadable(lazy(() => import('views/forms/layouts/ActionBar')));
-const FrmLayoutStickyActionBar = Loadable(lazy(() => import('views/forms/layouts/StickyActionBar')));
-
-// forms plugins routing
-const FrmAutocomplete = Loadable(lazy(() => import('views/forms/plugins/AutoComplete')));
-const FrmMask = Loadable(lazy(() => import('views/forms/plugins/Mask')));
-const FrmClipboard = Loadable(lazy(() => import('views/forms/plugins/Clipboard')));
-const FrmRecaptcha = Loadable(lazy(() => import('views/forms/plugins/Recaptcha')));
-const FrmWysiwugEditor = Loadable(lazy(() => import('views/forms/plugins/WysiwugEditor')));
-const FrmModal = Loadable(lazy(() => import('views/forms/plugins/Modal')));
-const FrmTooltip = Loadable(lazy(() => import('views/forms/plugins/Tooltip')));
-
-// table routing
-const TableBasic = Loadable(lazy(() => import('views/forms/tables/TableBasic')));
-const TableDense = Loadable(lazy(() => import('views/forms/tables/TableDense')));
-const TableEnhanced = Loadable(lazy(() => import('views/forms/tables/TableEnhanced')));
-const TableData = Loadable(lazy(() => import('views/forms/tables/TableData')));
-const TableCustomized = Loadable(lazy(() => import('views/forms/tables/TablesCustomized')));
-const TableStickyHead = Loadable(lazy(() => import('views/forms/tables/TableStickyHead')));
-const TableCollapsible = Loadable(lazy(() => import('views/forms/tables/TableCollapsible')));
+const DidTable = Loadable(lazy(() => import('views/forms/did-porting/DidTable')));
+const PortingTable = Loadable(lazy(() => import('views/forms/did-porting/PortingTable')));
 
 // forms validation
 const FrmFormsValidation = Loadable(lazy(() => import('views/forms/forms-validation')));
@@ -96,111 +65,13 @@ const MainRoutes = {
     ),
     children: [
         {
-            path: '/components/text-field',
-            element: <FrmComponentsTextfield />
-        },
-        {
-            path: '/components/button',
-            element: <FrmComponentsButton />
-        },
-        {
-            path: '/components/checkbox',
-            element: <FrmComponentsCheckbox />
-        },
-        {
-            path: '/components/radio',
-            element: <FrmComponentsRadio />
-        },
-        {
-            path: '/components/autocomplete',
-            element: <FrmComponentsAutoComplete />
-        },
-        {
-            path: '/components/slider',
-            element: <FrmComponentsSlider />
-        },
-        {
-            path: '/components/switch',
-            element: <FrmComponentsSwitch />
-        },
-        {
-            path: '/components/date-time',
-            element: <FrmComponentsDateTime />
+            path: '/did-porting/did_table',
+            element: <DidTable />
         },
 
         {
-            path: '/forms/layouts/layouts',
-            element: <FrmLayoutLayout />
-        },
-        {
-            path: '/forms/layouts/multi-column-forms',
-            element: <FrmLayoutMultiColumnForms />
-        },
-        {
-            path: '/forms/layouts/action-bar',
-            element: <FrmLayoutActionBar />
-        },
-        {
-            path: '/forms/layouts/sticky-action-bar',
-            element: <FrmLayoutStickyActionBar />
-        },
-
-        {
-            path: '/forms/frm-autocomplete',
-            element: <FrmAutocomplete />
-        },
-        {
-            path: '/forms/frm-mask',
-            element: <FrmMask />
-        },
-        {
-            path: '/forms/frm-clipboard',
-            element: <FrmClipboard />
-        },
-        {
-            path: '/forms/frm-recaptcha',
-            element: <FrmRecaptcha />
-        },
-        {
-            path: '/forms/frm-wysiwug',
-            element: <FrmWysiwugEditor />
-        },
-        {
-            path: '/forms/frm-modal',
-            element: <FrmModal />
-        },
-        {
-            path: '/forms/frm-tooltip',
-            element: <FrmTooltip />
-        },
-
-        {
-            path: '/tables/tbl-basic',
-            element: <TableBasic />
-        },
-        {
-            path: '/tables/tbl-dense',
-            element: <TableDense />
-        },
-        {
-            path: '/tables/tbl-enhanced',
-            element: <TableEnhanced />
-        },
-        {
-            path: '/tables/tbl-data',
-            element: <TableData />
-        },
-        {
-            path: '/tables/tbl-customized',
-            element: <TableCustomized />
-        },
-        {
-            path: '/tables/tbl-sticky-header',
-            element: <TableStickyHead />
-        },
-        {
-            path: '/tables/tbl-collapse',
-            element: <TableCollapsible />
+            path: '/did-porting/porting_table',
+            element: <PortingTable />
         },
 
         {

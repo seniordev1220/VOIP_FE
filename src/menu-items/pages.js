@@ -2,53 +2,74 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconKey, IconReceipt2, IconBug, IconBellRinging, IconPhoneCall, IconQuestionMark, IconShieldLock } from '@tabler/icons';
-
-// constant
-const icons = {
+import {
     IconKey,
-    IconReceipt2,
+    IconChartRadar,
     IconBug,
     IconBellRinging,
     IconPhoneCall,
     IconQuestionMark,
-    IconShieldLock
+    IconShieldLock,
+    IconUser
+} from '@tabler/icons';
+
+// constant
+const icons = {
+    IconKey,
+    IconChartRadar,
+    IconBug,
+    IconBellRinging,
+    IconPhoneCall,
+    IconQuestionMark,
+    IconShieldLock,
+    IconUser
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const pages = {
-    id: 'pages',
-    title: <FormattedMessage id="pages" />,
-    caption: <FormattedMessage id="pages-caption" />,
+    id: 'settings',
+    title: <FormattedMessage id="settings" />,
     icon: icons.IconKey,
     type: 'group',
     children: [
         {
-            id: 'price',
-            title: <FormattedMessage id="pricing" />,
+            id: 'report',
+            title: <FormattedMessage id="report" />,
             type: 'collapse',
-            icon: icons.IconReceipt2,
+            icon: icons.IconChartRadar,
             children: [
                 {
                     id: 'price1',
-                    title: (
-                        <>
-                            <FormattedMessage id="price" /> 01
-                        </>
-                    ),
+                    title: <FormattedMessage id="reporting" />,
                     type: 'item',
                     url: '/pages/price/price1'
                 },
                 {
-                    id: 'price2',
-                    title: (
-                        <>
-                            <FormattedMessage id="price" /> 02
-                        </>
-                    ),
+                    id: 'price1',
+                    title: <FormattedMessage id="call_recording" />,
                     type: 'item',
-                    url: '/pages/price/price2'
+                    url: '/pages/price/price1'
+                }
+            ]
+        },
+        {
+            id: 'account',
+            title: <FormattedMessage id="account" />,
+            type: 'collapse',
+            icon: icons.IconUser,
+            children: [
+                {
+                    id: 'price1',
+                    title: <FormattedMessage id="my_account" />,
+                    type: 'item',
+                    url: '/pages/price/price1'
+                },
+                {
+                    id: 'price1',
+                    title: <FormattedMessage id="billing" />,
+                    type: 'item',
+                    url: '/pages/price/price1'
                 }
             ]
         }

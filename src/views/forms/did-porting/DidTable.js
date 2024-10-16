@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 
 // material-ui
 import {
@@ -17,15 +18,13 @@ import {
     Toolbar,
     Tooltip,
     Typography,
-    Stack
+    Button,
+    Grid
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-import { CSVExport } from './TableExports';
-import { header } from './TableBasic';
 
 // assets
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -192,7 +191,7 @@ const EnhancedTableToolbar = ({ numSelected }) => (
             </Typography>
         ) : (
             <Typography variant="h4" id="tableTitle">
-                Nutrition
+                Buy Number
             </Typography>
         )}
         <Box sx={{ flexGrow: 1 }} />
@@ -268,23 +267,29 @@ export default function EnhancedTable() {
     };
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
-
+    const theme = useTheme();
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <MainCard
-            content={false}
-            title="Enhanced Table"
-            secondary={
-                <Stack direction="row" spacing={2} alignItems="center">
-                    <CSVExport data={selectedValue.length > 0 ? selectedValue : rows} filename="enhanced-table.csv" header={header} />
-                    <SecondaryAction link="https://next.material-ui.com/components/tables/" />
-                </Stack>
-            }
-        >
+        <MainCard content={false}>
+            <Box display="flex" justifyContent="flex-start" p={5}>
+                <Typography variant="h2" id="tableTitle">
+                    My Number
+                </Typography>
+            </Box>
+            <Box display="flex" justifyContent="flex-end" pr={4} mt={-5}>
+                <Button
+                    variant="contained"
+                    sx={{
+                        background: '#6cbd45',
+                        '&:hover': { background: '#6cbd35' }
+                    }}
+                >
+                    Buy New Number
+                </Button>
+            </Box>
             <EnhancedTableToolbar numSelected={selected.length} />
-
             {/* table */}
             <TableContainer>
                 <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>

@@ -2,16 +2,17 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconClipboardCheck, IconPictureInPicture, IconForms, IconBorderAll, IconChartDots, IconStairsUp } from '@tabler/icons';
+import { IconClipboardCheck, IconPictureInPicture, IconForms, IconPhone, IconMessage, IconUsers, IconPhoneCall } from '@tabler/icons';
 
 // constant
 const icons = {
     IconClipboardCheck,
     IconPictureInPicture,
     IconForms,
-    IconBorderAll,
-    IconChartDots,
-    IconStairsUp
+    IconPhone,
+    IconMessage,
+    IconPhoneCall,
+    IconUsers
 };
 
 // ==============================|| UI FORMS MENU ITEMS ||============================== //
@@ -175,43 +176,50 @@ const forms = {
         //     ]
         // },
         {
+            id: 'forms-wizard',
+            title: <FormattedMessage id="reseller_manage" />,
+            type: 'item',
+            url: '/forms/forms-wizard',
+            icon: icons.IconUsers
+        },
+        {
             id: 'tables',
             title: <FormattedMessage id="did" />,
             type: 'collapse',
-            icon: icons.IconBorderAll,
+            icon: icons.IconPhone,
             children: [
                 {
                     id: 'did',
                     title: <FormattedMessage id="did-table" />,
                     type: 'item',
-                    url: '/tables/tbl-enhanced',
+                    url: '/did-porting/did_table',
                     breadcrumbs: false
                 },
                 {
                     id: 'porting',
                     title: <FormattedMessage id="porting-table" />,
                     type: 'item',
-                    url: '/tables/tbl-enhanced',
+                    url: '/did-porting/porting_table',
                     breadcrumbs: false
                 }
             ]
         },
         {
             id: 'charts',
-            title: <FormattedMessage id="charts" />,
+            title: <FormattedMessage id="msg" />,
             type: 'collapse',
-            icon: icons.IconChartDots,
+            icon: icons.IconMessage,
             children: [
                 {
                     id: 'apexchart',
-                    title: <FormattedMessage id="apexchart" />,
+                    title: <FormattedMessage id="sms" />,
                     type: 'item',
                     url: '/forms/charts/apexchart',
                     breadcrumbs: false
                 },
                 {
                     id: 'organization-chart',
-                    title: <FormattedMessage id="organization-chart" />,
+                    title: <FormattedMessage id="whatsapp" />,
                     type: 'item',
                     url: '/forms/charts/orgchart',
                     breadcrumbs: false
@@ -219,18 +227,26 @@ const forms = {
             ]
         },
         {
-            id: 'forms-validation',
-            title: <FormattedMessage id="forms-validation" />,
-            type: 'item',
-            url: '/forms/forms-validation',
-            icon: icons.IconClipboardCheck
-        },
-        {
-            id: 'forms-wizard',
-            title: <FormattedMessage id="forms-wizard" />,
-            type: 'item',
-            url: '/forms/forms-wizard',
-            icon: icons.IconStairsUp
+            id: 'voice',
+            title: <FormattedMessage id="voice" />,
+            type: 'collapse',
+            icon: icons.IconPhoneCall,
+            children: [
+                {
+                    id: 'sip_trunk',
+                    title: <FormattedMessage id="sip_trunk" />,
+                    type: 'item',
+                    url: '',
+                    breadcrumbs: false
+                },
+                {
+                    id: 'outbound_profile',
+                    title: <FormattedMessage id="outbound_profile" />,
+                    type: 'item',
+                    url: '',
+                    breadcrumbs: false
+                }
+            ]
         }
     ]
 };

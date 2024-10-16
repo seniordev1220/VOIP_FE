@@ -173,15 +173,11 @@ const NavCollapse = ({ menu, level, parentId }) => {
 
     const Icon = menu.icon;
     const menuIcon = menu.icon ? (
-        <Icon
-            strokeWidth={1.5}
-            size={drawerOpen ? '20px' : '24px'}
-            style={{ color: isSelected ? theme.palette.secondary.main : theme.palette.text.primary }}
-        />
+        <Icon strokeWidth={1.5} size={drawerOpen ? '20px' : '24px'} style={{ color: isSelected ? 'white' : theme.palette.text.primary }} />
     ) : (
         <FiberManualRecordIcon
             sx={{
-                color: isSelected ? theme.palette.secondary.main : theme.palette.text.primary,
+                color: isSelected ? 'white' : theme.palette.text.primary,
                 width: isSelected ? 8 : 6,
                 height: isSelected ? 8 : 6
             }}
@@ -195,8 +191,8 @@ const NavCollapse = ({ menu, level, parentId }) => {
         <IconChevronRight stroke={1.5} size="16px" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
     );
 
-    const textColor = theme.palette.mode === 'dark' ? 'grey.400' : 'text.primary';
-    const iconSelectedColor = theme.palette.mode === 'dark' && drawerOpen ? 'text.primary' : 'secondary.main';
+    const textColor = theme.palette.mode === 'dark' ? 'white' : 'text.primary';
+    const iconSelectedColor = theme.palette.mode === 'dark' && drawerOpen ? 'white' : 'white';
 
     const popperId = openMini ? `collapse-pop-${menu.id}` : undefined;
 
@@ -210,29 +206,45 @@ const NavCollapse = ({ menu, level, parentId }) => {
                             borderRadius: `${borderRadius}px`,
                             mb: 0.5,
                             pl: drawerOpen ? `${level * 24}px` : 1.25,
+                            color: isSelected ? 'white' : theme.palette.text.primary,
                             ...(drawerOpen &&
                                 level === 1 &&
                                 theme.palette.mode !== 'dark' && {
                                     '&:hover': {
-                                        background: theme.palette.secondary.light
+                                        background: '#c3e4b4',
+                                        color: 'white',
+                                        '&.Mui-selected': {
+                                            color: 'white'
+                                        }
                                     },
                                     '&.Mui-selected': {
-                                        background: theme.palette.secondary.light,
+                                        background: '#6cbd45',
                                         color: iconSelectedColor,
                                         '&:hover': {
-                                            color: iconSelectedColor,
-                                            background: theme.palette.secondary.light
+                                            color: 'white',
+                                            background: '#c3e4b4',
+                                            '&.Mui-selected': {
+                                                color: 'white'
+                                            }
                                         }
                                     }
                                 }),
                             ...((!drawerOpen || level !== 1) && {
                                 py: level === 1 ? 0 : 1,
                                 '&:hover': {
-                                    bgcolor: 'transparent'
+                                    bgcolor: 'transparent',
+                                    color: 'white',
+                                    '& .MuiListItemIcon-root': {
+                                        color: 'white'
+                                    }
                                 },
                                 '&.Mui-selected': {
                                     '&:hover': {
-                                        bgcolor: 'transparent'
+                                        bgcolor: 'transparent',
+                                        color: 'white',
+                                        '& .MuiListItemIcon-root': {
+                                            color: 'white'
+                                        }
                                     },
                                     bgcolor: 'transparent'
                                 }
@@ -354,8 +366,7 @@ const NavCollapse = ({ menu, level, parentId }) => {
                                             height: '100%',
                                             width: '1px',
                                             opacity: theme.palette.mode === 'dark' ? 0.2 : 1,
-                                            background:
-                                                theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary.light
+                                            background: theme.palette.mode === 'dark' ? '#6cbd45' : theme.palette.primary.light
                                         }
                                     }}
                                 >

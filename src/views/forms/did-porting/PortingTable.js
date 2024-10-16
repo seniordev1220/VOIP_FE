@@ -6,7 +6,6 @@ import {
     Box,
     Checkbox,
     IconButton,
-    Paper,
     Table,
     TableBody,
     TableCell,
@@ -25,8 +24,6 @@ import { visuallyHidden } from '@mui/utils';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-import { CSVExport } from './TableExports';
-import { header } from './TableBasic';
 
 // assets
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -42,6 +39,7 @@ function createData(name, calories, fat, carbs, protein) {
     };
 }
 
+// table data
 const rows = [
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Donut', 452, 25.0, 51, 4.9),
@@ -69,8 +67,9 @@ function descendingComparator(a, b, orderBy) {
     return 0;
 }
 
-const getComparator = (order, orderBy) =>
-    order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
+function getComparator(order, orderBy) {
+    return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
+}
 
 function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -88,7 +87,7 @@ const headCells = [
         id: 'name',
         numeric: false,
         disablePadding: true,
-        label: 'Dessert (100g serving)'
+        label: 'Dessert (100g serving)'
     },
     {
         id: 'calories',
@@ -100,19 +99,19 @@ const headCells = [
         id: 'fat',
         numeric: true,
         disablePadding: false,
-        label: 'Fat (g)'
+        label: 'Fat (g)'
     },
     {
         id: 'carbs',
         numeric: true,
         disablePadding: false,
-        label: 'Carbs (g)'
+        label: 'Carbs (g)'
     },
     {
         id: 'protein',
         numeric: true,
         disablePadding: false,
-        label: 'Protein (g)'
+        label: 'Protein (g)'
     }
 ];
 
@@ -142,7 +141,7 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
+                        sortDirection={orderBy === headCell.id ? order : undefined}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
@@ -172,7 +171,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired
 };
 
-// ==============================|| TABLE - HEADER TOOLBAR ||============================== //
+// ==============================|| TABLE - TOOLBAR ||============================== //
 
 const EnhancedTableToolbar = ({ numSelected }) => (
     <Toolbar
@@ -190,7 +189,7 @@ const EnhancedTableToolbar = ({ numSelected }) => (
                 {numSelected} selected
             </Typography>
         ) : (
-            <Typography variant="h6" id="tableTitle">
+            <Typography variant="h4" id="tableTitle">
                 Nutrition
             </Typography>
         )}
@@ -209,7 +208,7 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired
 };
 
-// ==============================|| TABLE - DATA TABLE ||============================== //
+// ==============================|| TABLE - ENHANCED ||============================== //
 
 export default function EnhancedTable() {
     const [order, setOrder] = React.useState('asc');
@@ -272,93 +271,82 @@ export default function EnhancedTable() {
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <MainCard
-            content={false}
-            title="Data Tables"
-            secondary={
-                <Stack direction="row" spacing={2} alignItems="center">
-                    <CSVExport data={selectedValue.length > 0 ? selectedValue : rows} filename="data-tables.csv" header={header} />
-                    <SecondaryAction link="https://next.material-ui.com/components/tables/" />
-                </Stack>
-            }
-        >
-            <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+        <MainCard content={false} title="Enhanced Table">
+            <EnhancedTableToolbar numSelected={selected.length} />
 
-                {/* table */}
-                <TableContainer>
-                    <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-                        <EnhancedTableHead
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
-                        <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    /** Make sure no display bugs if row isn't an OrderData object */
-                                    if (typeof row === 'number') return null;
-                                    const isItemSelected = isSelected(row.name);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox" sx={{ pl: 3 }}>
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        'aria-labelledby': labelId
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell sx={{ pr: 3 }} align="right">
-                                                {row.protein}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow
-                                    style={{
-                                        height: (dense ? 33 : 53) * emptyRows
-                                    }}
-                                >
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            {/* table */}
+            <TableContainer>
+                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
+                    <EnhancedTableHead
+                        numSelected={selected.length}
+                        order={order}
+                        orderBy={orderBy}
+                        onSelectAllClick={handleSelectAllClick}
+                        onRequestSort={handleRequestSort}
+                        rowCount={rows.length}
+                    />
+                    <TableBody>
+                        {stableSort(rows, getComparator(order, orderBy))
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((row, index) => {
+                                if (typeof row === 'number') return null;
+                                const isItemSelected = isSelected(row.name);
+                                const labelId = `enhanced-table-checkbox-${index}`;
 
-                {/* table data */}
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
+                                return (
+                                    <TableRow
+                                        hover
+                                        onClick={(event) => handleClick(event, row.name)}
+                                        role="checkbox"
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.name}
+                                        selected={isItemSelected}
+                                    >
+                                        <TableCell sx={{ pl: 3 }} padding="checkbox">
+                                            <Checkbox
+                                                color="primary"
+                                                checked={isItemSelected}
+                                                inputProps={{
+                                                    'aria-labelledby': labelId
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            {row.name}
+                                        </TableCell>
+                                        <TableCell align="right">{row.calories}</TableCell>
+                                        <TableCell align="right">{row.fat}</TableCell>
+                                        <TableCell align="right">{row.carbs}</TableCell>
+                                        <TableCell sx={{ pr: 3 }} align="right">
+                                            {row.protein}
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        {emptyRows > 0 && (
+                            <TableRow
+                                style={{
+                                    height: (dense ? 33 : 53) * emptyRows
+                                }}
+                            >
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            {/* table pagination */}
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </MainCard>
     );
 }

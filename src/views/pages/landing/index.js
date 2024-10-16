@@ -2,7 +2,7 @@
 import { useTheme, styled } from '@mui/material/styles';
 
 // project imports
-import Customization from 'layout/Customization';
+// import Customization from 'layout/Customization';
 import AppBar from 'ui-component/extended/AppBar';
 import HeaderSection from './HeaderSection';
 import CardSection from './CardSection';
@@ -94,7 +94,7 @@ const Landing = () => {
             <SectionWrapper sx={{ bgcolor: theme.palette.mode === 'dark' ? 'background.default' : 'dark.900', pb: 0 }}>
                 <FooterSection />
             </SectionWrapper>
-            <Customization />
+            {/* <Customization /> */}
         </>
     );
 };
