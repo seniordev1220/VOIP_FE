@@ -1,7 +1,6 @@
-// material-ui
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
-    Avatar,
     Button,
     CardContent,
     CardActions,
@@ -9,9 +8,10 @@ import {
     Divider,
     Grid,
     TextField,
-    FormHelperText,
     FormControlLabel,
-    Typography
+    Typography,
+    RadioGroup,
+    FormControl
 } from '@mui/material';
 
 // project imports
@@ -19,13 +19,17 @@ import MainCard from 'ui-component/cards/MainCard';
 import InputLabel from 'ui-component/extended/Form/InputLabel';
 import { gridSpacing } from 'store/constant';
 import useConfig from 'hooks/useConfig';
-import LAYOUT_CONST from 'constant';
 
-// ==============================|| Sticky ActionBar ||============================== //
+// ==============================|| STICKY ACTION BAR ||============================== //
 
 function StickyActionBar() {
     const theme = useTheme();
     const { layout } = useConfig();
+
+    const [valueSIP, setValueSIP] = React.useState('twillio');
+    const [twilioSid, setTwilioSid] = React.useState('');
+    const [twilioToken, setTwilioToken] = React.useState('');
+    const [telnyxApiKey, setTelnyxApiKey] = React.useState('');
 
     return (
         <Grid container spacing={gridSpacing}>
@@ -48,8 +52,6 @@ function StickyActionBar() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2} alignItems="center">
-                                    <Grid item xs={12} sm={3} lg={4} />
-                                    <Grid item xs={12} sm={9} lg={6} />
                                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                                         <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
                                             Name :
@@ -57,7 +59,6 @@ function StickyActionBar() {
                                     </Grid>
                                     <Grid item xs={12} sm={9} lg={6}>
                                         <TextField fullWidth placeholder="Enter full name" />
-                                        <FormHelperText>Please enter your full name</FormHelperText>
                                     </Grid>
                                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                                         <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
@@ -66,7 +67,6 @@ function StickyActionBar() {
                                     </Grid>
                                     <Grid item xs={12} sm={9} lg={6}>
                                         <TextField fullWidth placeholder="Enter email" />
-                                        <FormHelperText>Please enter your Email</FormHelperText>
                                     </Grid>
                                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                                         <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
@@ -74,8 +74,7 @@ function StickyActionBar() {
                                         </InputLabel>
                                     </Grid>
                                     <Grid item xs={12} sm={9} lg={6}>
-                                        <TextField fullWidth placeholder="Enter Password" />
-                                        <FormHelperText>Please enter your Password</FormHelperText>
+                                        <TextField fullWidth placeholder="Enter Password" type="password" />
                                     </Grid>
                                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                                         <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
@@ -83,8 +82,7 @@ function StickyActionBar() {
                                         </InputLabel>
                                     </Grid>
                                     <Grid item xs={12} sm={9} lg={6}>
-                                        <TextField fullWidth placeholder="Enter Password" />
-                                        <FormHelperText>Please enter your Confirm Password</FormHelperText>
+                                        <TextField fullWidth placeholder="Enter Password" type="password" />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -98,19 +96,78 @@ function StickyActionBar() {
                                         </InputLabel>
                                     </Grid>
                                     <Grid item xs={12} sm={9} lg={6}>
-                                        <FormControlLabel
-                                            value="sucess"
-                                            control={<Radio sx={{ color: '#6cbd45', '&.Mui-checked': { color: '#6cbd45' } }} />}
-                                            label="Twillio"
-                                        />
-                                        <FormControlLabel
-                                            value="sucess"
-                                            control={<Radio sx={{ color: '#6cbd45', '&.Mui-checked': { color: '#6cbd45' } }} />}
-                                            label="Telnyx"
-                                        />
+                                        <FormControl>
+                                            <RadioGroup
+                                                row
+                                                aria-label="sip_provider"
+                                                value={valueSIP}
+                                                onChange={(e) => setValueSIP(e.target.value)}
+                                                name="row-radio-buttons-group"
+                                            >
+                                                <FormControlLabel
+                                                    value="twillio"
+                                                    control={<Radio sx={{ color: '#6cbd45', '&.Mui-checked': { color: '#6cbd45' } }} />}
+                                                    label="Twillio"
+                                                />
+                                                <FormControlLabel
+                                                    value="telnyx"
+                                                    control={<Radio sx={{ color: '#6cbd45', '&.Mui-checked': { color: '#6cbd45' } }} />}
+                                                    label="Telnyx"
+                                                />
+                                            </RadioGroup>
+                                        </FormControl>
                                     </Grid>
                                 </Grid>
                             </Grid>
+
+                            {/* Conditional Inputs */}
+                            {valueSIP === 'twillio' && (
+                                <>
+                                    <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
+                                        <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
+                                            Twillio Account SID :
+                                        </InputLabel>
+                                    </Grid>
+                                    <Grid item xs={12} sm={9} lg={6}>
+                                        <TextField
+                                            fullWidth
+                                            placeholder="Enter Twillio Account SID"
+                                            value={twilioSid}
+                                            onChange={(e) => setTwilioSid(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
+                                        <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
+                                            Twillio Auth Token :
+                                        </InputLabel>
+                                    </Grid>
+                                    <Grid item xs={12} sm={9} lg={6}>
+                                        <TextField
+                                            fullWidth
+                                            placeholder="Enter Twillio Auth Token"
+                                            value={twilioToken}
+                                            onChange={(e) => setTwilioToken(e.target.value)}
+                                        />
+                                    </Grid>
+                                </>
+                            )}
+                            {valueSIP === 'telnyx' && (
+                                <>
+                                    <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
+                                        <InputLabel horizontal sx={{ textAlign: { xs: 'left', sm: 'right' } }}>
+                                            Telnyx API Key :
+                                        </InputLabel>
+                                    </Grid>
+                                    <Grid item xs={12} sm={9} lg={6}>
+                                        <TextField
+                                            fullWidth
+                                            placeholder="Enter Telnyx API Key"
+                                            value={telnyxApiKey}
+                                            onChange={(e) => setTelnyxApiKey(e.target.value)}
+                                        />
+                                    </Grid>
+                                </>
+                            )}
                         </Grid>
                     </CardContent>
                     <Divider />

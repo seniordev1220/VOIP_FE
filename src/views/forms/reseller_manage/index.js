@@ -139,7 +139,7 @@ export default function StickyHeadTable() {
                 </Button>
             </Box>
             {/* table */}
-            <TableContainer sx={{ maxHeight: 440 }}>
+            <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
@@ -162,12 +162,12 @@ export default function StickyHeadTable() {
                                                 <Stack direction="row" spacing={1} justifyContent="center">
                                                     <Tooltip title="Edit">
                                                         <IconButton onClick={() => handleEdit(row)} size="small">
-                                                            <EditIcon />
+                                                            <EditIcon sx={{ fontSize: 20 }} />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip title="Delete">
                                                         <IconButton onClick={() => handleDelete(row)} size="small" sx={{ color: 'red' }}>
-                                                            <DeleteIcon color="red" />
+                                                            <DeleteIcon color="red" sx={{ fontSize: 20 }} />
                                                         </IconButton>
                                                     </Tooltip>
                                                 </Stack>
