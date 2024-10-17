@@ -6,12 +6,7 @@ import { Avatar, Box, useMediaQuery } from '@mui/material';
 import LAYOUT_CONST from 'constant';
 import useConfig from 'hooks/useConfig';
 import LogoSection from '../LogoSection';
-import SearchSection from './SearchSection';
-import MobileSection from './MobileSection';
 import ProfileSection from './ProfileSection';
-import LocalizationSection from './LocalizationSection';
-import MegaMenuSection from './MegaMenuSection';
-import NotificationSection from './NotificationSection';
 
 import { useDispatch, useSelector } from 'store';
 import { openDrawer } from 'store/slices/menu';
@@ -54,11 +49,11 @@ const Header = () => {
                             ...theme.typography.mediumAvatar,
                             overflow: 'hidden',
                             transition: 'all .2s ease-in-out',
-                            background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.secondary.light,
-                            color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.secondary.dark,
+                            background: theme.palette.mode === 'dark' ? '#6cbd45' : '#6cbd45',
+                            color: theme.palette.mode === 'dark' ? 'white' : 'white',
                             '&:hover': {
-                                background: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.secondary.dark,
-                                color: theme.palette.mode === 'dark' ? theme.palette.secondary.light : theme.palette.secondary.light
+                                background: theme.palette.mode === 'dark' ? '#c3e4b4' : '#c3e4b4',
+                                color: theme.palette.mode === 'dark' ? '#8c8c8c' : '#8c8c8c'
                             }
                         }}
                         onClick={() => dispatch(openDrawer(!drawerOpen))}

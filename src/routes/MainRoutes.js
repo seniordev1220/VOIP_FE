@@ -14,7 +14,8 @@ const PortingTable = Loadable(lazy(() => import('views/forms/did-porting/Porting
 
 // forms validation
 const FrmFormsValidation = Loadable(lazy(() => import('views/forms/forms-validation')));
-const FrmFormsWizard = Loadable(lazy(() => import('views/forms/forms-wizard')));
+const FrmResellerManage = Loadable(lazy(() => import('views/forms/reseller_manage')));
+const FrmAddNewReseller = Loadable(lazy(() => import('views/forms/reseller_manage/add_new_reseller')));
 
 // chart routing
 const ChartApexchart = Loadable(lazy(() => import('views/forms/chart/Apexchart')));
@@ -87,8 +88,12 @@ const MainRoutes = {
             element: <FrmFormsValidation />
         },
         {
-            path: '/forms/forms-wizard',
-            element: <FrmFormsWizard />
+            path: '/forms/reseller-manage',
+            element: <FrmResellerManage />
+        },
+        {
+            path: '/forms/add_new_reseller',
+            element: <FrmAddNewReseller />
         },
 
         {

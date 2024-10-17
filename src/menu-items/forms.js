@@ -179,7 +179,7 @@ const forms = {
             id: 'forms-wizard',
             title: <FormattedMessage id="reseller_manage" />,
             type: 'item',
-            url: '/forms/forms-wizard',
+            url: '/forms/reseller-manage',
             icon: icons.IconUsers
         },
         {
@@ -192,15 +192,13 @@ const forms = {
                     id: 'did',
                     title: <FormattedMessage id="did-table" />,
                     type: 'item',
-                    url: '/did-porting/did_table',
-                    breadcrumbs: false
+                    url: '/did-porting/did_table'
                 },
                 {
                     id: 'porting',
                     title: <FormattedMessage id="porting-table" />,
                     type: 'item',
-                    url: '/did-porting/porting_table',
-                    breadcrumbs: false
+                    url: '/did-porting/porting_table'
                 }
             ]
         },
@@ -214,15 +212,13 @@ const forms = {
                     id: 'apexchart',
                     title: <FormattedMessage id="sms" />,
                     type: 'item',
-                    url: '/forms/charts/apexchart',
-                    breadcrumbs: false
+                    url: '/forms/charts/apexchart'
                 },
                 {
                     id: 'organization-chart',
                     title: <FormattedMessage id="whatsapp" />,
                     type: 'item',
-                    url: '/forms/charts/orgchart',
-                    breadcrumbs: false
+                    url: '/forms/charts/orgchart'
                 }
             ]
         },
@@ -236,15 +232,13 @@ const forms = {
                     id: 'sip_trunk',
                     title: <FormattedMessage id="sip_trunk" />,
                     type: 'item',
-                    url: '',
-                    breadcrumbs: false
+                    url: ''
                 },
                 {
                     id: 'outbound_profile',
                     title: <FormattedMessage id="outbound_profile" />,
                     type: 'item',
-                    url: '',
-                    breadcrumbs: false
+                    url: ''
                 }
             ]
         }
