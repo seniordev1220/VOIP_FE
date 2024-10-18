@@ -19,6 +19,8 @@ const FrmResellerManage = Loadable(lazy(() => import('views/forms/reseller_manag
 const FrmAddNewReseller = Loadable(lazy(() => import('views/forms/reseller_manage/add_new_reseller')));
 
 const OutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile')));
+const NewOutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile/add_new_profile')));
+const EditOutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile/edit_new_profile')));
 
 // chart routing
 const ChartApexchart = Loadable(lazy(() => import('views/forms/chart/Apexchart')));
@@ -107,6 +109,14 @@ const MainRoutes = {
         {
             path: '/voice/outbound_profile',
             element: <OutboundProfile />
+        },
+        {
+            path: '/voice/outbound_profile/create',
+            element: <NewOutboundProfile />
+        },
+        {
+            path: '/voice/outbound_profile/edit',
+            element: <EditOutboundProfile />
         },
 
         {

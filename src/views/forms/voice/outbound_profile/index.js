@@ -124,8 +124,8 @@ export default function StickyHeadTable() {
         setSelectedRow(true);
     };
 
-    const handleAddReseller = () => {
-        navigate('/forms/add_new_reseller');
+    const handleNewProfile = () => {
+        navigate('/voice/outbound_profile/create');
     };
 
     const handleCloseDialog = () => {
@@ -147,7 +147,7 @@ export default function StickyHeadTable() {
                         background: '#6cbd45',
                         '&:hover': { background: '#6cbd35' }
                     }}
-                    onClick={handleAddReseller}
+                    onClick={handleNewProfile}
                 >
                     Add New Profile
                 </Button>
