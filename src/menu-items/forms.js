@@ -238,7 +238,7 @@ const forms = {
                     id: 'outbound_profile',
                     title: <FormattedMessage id="outbound_profile" />,
                     type: 'item',
-                    url: ''
+                    url: '/voice/outbound_profile'
                 }
             ]
         }
