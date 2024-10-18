@@ -11,6 +11,7 @@ const DashboardAnalytics = Loadable(lazy(() => import('views/dashboard/Analytics
 
 const DidTable = Loadable(lazy(() => import('views/forms/did-porting/DidTable')));
 const PortingTable = Loadable(lazy(() => import('views/forms/did-porting/PortingTable')));
+const BuyNewNumber = Loadable(lazy(() => import('views/forms/did-porting/buyNumber')));
 
 // forms validation
 const FrmFormsValidation = Loadable(lazy(() => import('views/forms/forms-validation')));
@@ -68,6 +69,11 @@ const MainRoutes = {
         {
             path: '/did-porting/did_table',
             element: <DidTable />
+        },
+
+        {
+            path: '/did-porting/buy_new_number',
+            element: <BuyNewNumber />
         },
 
         {
