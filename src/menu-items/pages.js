@@ -41,12 +41,6 @@ const pages = {
             children: [
                 {
                     id: 'price1',
-                    title: <FormattedMessage id="reporting" />,
-                    type: 'item',
-                    url: '/pages/price/price1'
-                },
-                {
-                    id: 'price1',
                     title: <FormattedMessage id="call_recording" />,
                     type: 'item',
                     url: '/pages/price/price1'
@@ -60,10 +54,10 @@ const pages = {
             icon: icons.IconUser,
             children: [
                 {
-                    id: 'price1',
+                    id: 'myaccount',
                     title: <FormattedMessage id="my_account" />,
                     type: 'item',
-                    url: '/pages/price/price1'
+                    url: '/account/setting'
                 },
                 {
                     id: 'price1',
