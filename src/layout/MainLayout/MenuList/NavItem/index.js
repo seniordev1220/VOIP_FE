@@ -35,7 +35,7 @@ const NavItem = ({ item, level, parentId }) => {
     ) : (
         <FiberManualRecordIcon
             sx={{
-                color: isSelected ? 'white' : theme.palette.text.primary,
+                color: isSelected ? '#355e21' : theme.palette.text.primary,
                 width: selectedItem.findIndex((id) => id === item?.id) > -1 ? 8 : 6,
                 height: selectedItem.findIndex((id) => id === item?.id) > -1 ? 8 : 6
             }}
@@ -86,25 +86,25 @@ const NavItem = ({ item, level, parentId }) => {
                         borderRadius: `${borderRadius}px`,
                         mb: 0.5,
                         pl: drawerOpen ? `${level * 24}px` : 1.25,
-                        color: isSelected ? 'white' : theme.palette.text.primary,
+                        color: isSelected ? '#355e21' : theme.palette.text.primary,
                         ...(drawerOpen &&
                             level === 1 &&
                             theme.palette.mode !== 'dark' && {
                                 '&:hover': {
                                     background: '#c3e4b4',
-                                    color: 'white',
+                                    color: '#355e21',
                                     '&.Mui-selected': {
-                                        color: 'white'
+                                        color: '#355e21'
                                     }
                                 },
                                 '&.Mui-selected': {
                                     background: '#6cbd45',
                                     color: iconSelectedColor,
                                     '&:hover': {
-                                        color: 'white',
+                                        color: '#355e21',
                                         background: '#c3e4b4',
                                         '&.Mui-selected': {
-                                            color: 'white'
+                                            color: '#355e21'
                                         }
                                     }
                                 }
@@ -113,17 +113,17 @@ const NavItem = ({ item, level, parentId }) => {
                             py: level === 1 ? 0 : 1,
                             '&:hover': {
                                 bgcolor: 'transparent',
-                                color: 'white',
+                                color: '#355e21',
                                 '& .MuiListItemIcon-root': {
-                                    color: 'white'
+                                    color: '#355e21'
                                 }
                             },
                             '&.Mui-selected': {
                                 '&:hover': {
                                     bgcolor: 'transparent',
-                                    color: 'white',
+                                    color: '#355e21',
                                     '& .MuiListItemIcon-root': {
-                                        color: 'white'
+                                        color: '#355e21'
                                     }
                                 },
                                 bgcolor: 'transparent'
