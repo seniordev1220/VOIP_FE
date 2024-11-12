@@ -9,14 +9,8 @@ import { Box, Button, CardMedia, Container, Grid, Link, Stack, Typography } from
 import { motion } from 'framer-motion';
 
 // project imports
-import AnimateButton from 'ui-component/extended/AnimateButton';
 import useConfig from 'hooks/useConfig';
 
-// assets
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-
-import TechLight from 'assets/images/landing/tech-light.svg';
-import TechDark from 'assets/images/landing/tech-dark.svg';
 import dashboard from 'assets/images/landing/hero-dashboard.png';
 import widget1 from 'assets/images/landing/hero-widget-1.png';
 import widget2 from 'assets/images/landing/hero-widget-2.png';
@@ -88,11 +82,11 @@ const HeaderSection = () => {
                             >
                                 <Stack spacing={1}>
                                     <Typography textAlign={{ xs: 'center', md: 'left' }} variant="h1" sx={headerSX}>
-                                        Use Berry to Power Your Next
+                                        Use Our Platform -
                                     </Typography>
 
-                                    <Typography textAlign={{ xs: 'center', md: 'left' }} variant="h1" color="primary" sx={headerSX}>
-                                        React Project
+                                    <Typography textAlign={{ xs: 'center', md: 'left' }} variant="h1" color="#6cbd45" sx={headerSX}>
+                                        TangoNordik
                                     </Typography>
                                 </Stack>
                             </motion.div>
@@ -109,54 +103,9 @@ const HeaderSection = () => {
                                     variant="body1"
                                     sx={{ fontSize: { xs: '1rem', md: '1.125rem' } }}
                                 >
-                                    Berry is React based Dashboard template which helps you to build faster and beautiful web applications.
+                                    TangoNordik offers robust communication solutions and features comparable to those of others like
+                                    Telnyx.
                                 </Typography>
-                            </motion.div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <motion.div
-                                initial={{ opacity: 0, translateY: 550 }}
-                                animate={{ opacity: 1, translateY: 0 }}
-                                transition={{ type: 'spring', stiffness: 150, damping: 30, delay: 0.4 }}
-                            >
-                                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'flex-start' } }}>
-                                    <Grid item>
-                                        <AnimateButton>
-                                            <Button
-                                                component={RouterLink}
-                                                to="/dashboard/default"
-                                                target="_blank"
-                                                size="large"
-                                                variant="contained"
-                                                color="secondary"
-                                                startIcon={<PlayArrowIcon />}
-                                            >
-                                                Live Preview
-                                            </Button>
-                                        </AnimateButton>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button component={Link} href="https://links.codedthemes.com/hsqll" target="_blank" size="large">
-                                            Purchase Now
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </motion.div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <motion.div
-                                initial={{ opacity: 0, translateY: 550 }}
-                                animate={{ opacity: 1, translateY: 0 }}
-                                transition={{ type: 'spring', stiffness: 150, damping: 30, delay: 0.6 }}
-                            >
-                                <Stack direction="row" spacing={2} alignItems="center" justifyContent={{ xs: 'center', md: 'flex-start' }}>
-                                    <CardMedia
-                                        component="img"
-                                        image={theme.palette.mode === 'dark' ? TechDark : TechLight}
-                                        alt="Berry Tech"
-                                        sx={{ width: { xs: '75%', sm: '50%', md: '75%' } }}
-                                    />
-                                </Stack>
                             </motion.div>
                         </Grid>
                     </Grid>
