@@ -152,7 +152,7 @@ export default function StickyHeadTable() {
                     </TableHead>
                     <TableBody>
                         {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                            <TableRow sx={{ py: 3 }} hover role="checkbox" tabIndex={-1} key={row.code}>
+                            <TableRow sx={{ py: 3 }} hover role="checkbox" tabIndex={-1} key={row.name}>
                                 {columns.map((column) => {
                                     const value = row[column.id];
 
