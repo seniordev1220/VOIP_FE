@@ -155,7 +155,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
                                         ? `/pages/forgot-password/forgot-password${loginProp}`
                                         : '/pages/forgot-password/forgot-password3'
                                 }
-                                color="secondary"
+                                color="#6cbd45"
                                 sx={{ textDecoration: 'none' }}
                             >
                                 Forgot Password?
@@ -170,7 +170,17 @@ const JWTLogin = ({ loginProp, ...others }) => {
                     )}
                     <Box sx={{ mt: 2 }}>
                         <AnimateButton>
-                            <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+                            <Button
+                                disabled={isSubmitting}
+                                fullWidth
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                sx={{
+                                    background: '#6cbd45',
+                                    '&:hover': { background: '#6cbd35' }
+                                }}
+                            >
                                 Sign In
                             </Button>
                         </AnimateButton>

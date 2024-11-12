@@ -22,6 +22,7 @@ const OutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_p
 const NewOutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile/add_new_profile')));
 const EditOutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile/edit_new_profile')));
 
+const AccountSettings = Loadable(lazy(() => import('views/pages/my-account')));
 // chart routing
 const ChartApexchart = Loadable(lazy(() => import('views/forms/chart/Apexchart')));
 const OrgChartPage = Loadable(lazy(() => import('views/forms/chart/OrgChart')));
@@ -117,6 +118,10 @@ const MainRoutes = {
         {
             path: '/voice/outbound_profile/edit',
             element: <EditOutboundProfile />
+        },
+        {
+            path: '/account/setting',
+            element: <AccountSettings />
         },
 
         {
