@@ -1,13 +1,50 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // material-ui
-import { Button, Grid, Stack, TextField, Typography, Autocomplete } from '@mui/material';
-import SubCard from 'ui-component/cards/SubCard';
-
+import {
+    Button,
+    Grid,
+    Stack,
+    TextField,
+    Typography,
+    Autocomplete,
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+    FormControlLabel,
+    Switch,
+    Paper,
+    TablePagination,
+    Snackbar,
+    Alert
+} from '@mui/material';
 // project imports
 import { gridSpacing } from 'store/constant';
 import MainCard from 'ui-component/cards/MainCard';
+
+const apiClient = axios.create({
+    baseURL: 'http://localhost:5000/api',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+const getDIDsByCountryAndType = async (countryCode, type) => {
+    try {
+        const response = await apiClient.get('/dids/by-country', {
+            params: { countryCode, type }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching DID numbers:', error.response?.data || error.message);
+        throw error;
+    }
+};
 
 function countryToFlag(isoCode) {
     return typeof String.fromCodePoint !== 'undefined'
@@ -22,6 +59,14 @@ function AddItemPage({ handleAddItem, setAddItemClicked }) {
     const [errors, setErrors] = useState({
         quantityError: ''
     });
+
+    const [countryCode, setCountryCode] = useState('');
+    const [type, setType] = useState('');
+    const [dids, setDIDs] = useState([]);
+    const [error, setError] = useState('');
+    const [page, setPage] = useState(0); // current page
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const countries = [
         { code: 'AD', label: 'Andorra', phone: '376' },
@@ -274,15 +319,7 @@ function AddItemPage({ handleAddItem, setAddItemClicked }) {
         { code: 'ZW', label: 'Zimbabwe', phone: '263' }
     ];
 
-    const featuresItemList = [
-        { title: 'SMS' },
-        { title: 'MMS' },
-        { title: 'Emergency' },
-        { title: 'Voice' },
-        { title: 'Fax' },
-        { title: 'International SMS' },
-        { title: 'HD Voice' }
-    ];
+    const featuresItemList = [{ title: 'local' }, { title: 'mobile' }, { title: 'tollFree' }];
 
     const featuresProps = {
         options: featuresItemList,
@@ -295,49 +332,43 @@ function AddItemPage({ handleAddItem, setAddItemClicked }) {
         }
     }, [selectedQuantity, selectedItem]);
 
-    const handleChange = (event) => {
-        const value = event.target.value;
-        if (event.target.name === 'quantity') {
-            if (Number(value) < 0) {
-                setErrors({
-                    ...errors,
-                    quantityError: 'negative values not allowed'
-                });
-                setSelectedQuantity(value);
-            } else if (Number(value) === 0) {
-                setErrors({
-                    ...errors,
-                    quantityError: 'quantity can not be zero'
-                });
-                setSelectedQuantity(value);
-            } else {
-                setSelectedQuantity(value);
-                setErrors({
-                    ...errors,
-                    quantityError: ''
-                });
-            }
-        } else {
-            const selectedOption = countries.find((item) => item.id === value);
-            setSelectedItem(selectedOption);
+    const handleSearch = async () => {
+        setError(''); // Clear previous errors
+        try {
+            const response = await getDIDsByCountryAndType(countryCode, type);
+            setDIDs(response.data);
+        } catch (err) {
+            const errorMessage = err.response?.data?.message || 'An error occurred while fetching DIDs.';
+            setError(errorMessage);
+            setDIDs([]); // Reset DID list on error
+            setOpenSnackbar(true); // Show Snackbar
         }
     };
 
-    const handleOk = () => {
-        const data = {
-            ...selectedItem,
-            totalAmount: amount,
-            selectedQuantity
-        };
+    const getLocationOrRegion = (locality, region, type) => {
+        if (type === 'tollFree' || type === 'mobile') {
+            return '-'; // Display "-" for tollFree or mobile types
+        }
+        return locality || region ? `${locality}, ${region}` : '-';
+    };
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to first page when rows per page change
+    };
+    const paginatedDIDs = dids.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-        handleAddItem(data);
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
     };
 
     return (
         <>
             <MainCard title="Buy Numbers">
                 <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={6}>
                         <Stack spacing={1}>
                             <Typography variant="subtitle1">Country</Typography>
                             <Autocomplete
@@ -361,21 +392,11 @@ function AddItemPage({ handleAddItem, setAddItemClicked }) {
                                         }}
                                     />
                                 )}
+                                onChange={(event, newValue) => setCountryCode(newValue?.code || '')}
                             />
                         </Stack>
                     </Grid>
-                    <Grid item xs={12} md={3}>
-                        <Stack spacing={1}>
-                            <Typography variant="subtitle1">Features</Typography>
-                            <Autocomplete
-                                {...featuresProps}
-                                id="include-input-in-list"
-                                includeInputInList
-                                renderInput={(params) => <TextField {...params} label="Any feature" />}
-                            />
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
+                    <Grid item xs={12} md={4}>
                         <Stack spacing={1}>
                             <Typography variant="subtitle1">Type</Typography>
                             <Autocomplete
@@ -383,28 +404,7 @@ function AddItemPage({ handleAddItem, setAddItemClicked }) {
                                 id="include-input-in-list"
                                 includeInputInList
                                 renderInput={(params) => <TextField {...params} label="All types" />}
-                            />
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Stack spacing={1}>
-                            <Typography variant="subtitle1">Search By</Typography>
-                            <Autocomplete
-                                {...featuresProps}
-                                id="include-input-in-list"
-                                includeInputInList
-                                renderInput={(params) => <TextField {...params} label="All types" />}
-                            />
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Stack spacing={1}>
-                            <Typography variant="subtitle1">Area Code</Typography>
-                            <Autocomplete
-                                {...featuresProps}
-                                id="include-input-in-list"
-                                includeInputInList
-                                renderInput={(params) => <TextField {...params} label="Select area" />}
+                                onChange={(event, newValue) => setType(newValue?.title || '')}
                             />
                         </Stack>
                     </Grid>
@@ -416,11 +416,79 @@ function AddItemPage({ handleAddItem, setAddItemClicked }) {
                                     background: '#6cbd45',
                                     '&:hover': { background: '#6cbd35' }
                                 }}
+                                onClick={handleSearch}
                             >
                                 Search Numbers
                             </Button>
                         </Stack>
                     </Grid>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Friendly Name</TableCell>
+                                    <TableCell>Phone Number</TableCell>
+                                    <TableCell>Location</TableCell>
+                                    <TableCell>Voice</TableCell>
+                                    <TableCell>SMS</TableCell>
+                                    <TableCell>MMS</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {paginatedDIDs.length > 0 ? (
+                                    paginatedDIDs.map((did, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{did.friendlyName || 'N/A'}</TableCell>
+                                            <TableCell>{did.phoneNumber}</TableCell>
+                                            <TableCell>{getLocationOrRegion(did.locality, did.region, type)}</TableCell>
+                                            <TableCell>
+                                                <FormControlLabel
+                                                    control={<Switch checked={did.capabilities.voice} />}
+                                                    label={did.capabilities.voice ? 'Enabled' : 'Disabled'}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <FormControlLabel
+                                                    control={<Switch checked={did.capabilities.SMS} />}
+                                                    label={did.capabilities.SMS ? 'Enabled' : 'Disabled'}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <FormControlLabel
+                                                    control={<Switch checked={did.capabilities.MMS} />}
+                                                    label={did.capabilities.MMS ? 'Enabled' : 'Disabled'}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell colSpan={6} align="center">
+                                            No Data
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]} // Options for number of rows per page
+                        component="div"
+                        count={dids.length} // Total number of items
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    <Snackbar
+                        open={openSnackbar}
+                        autoHideDuration={6000} // The Snackbar will close after 6 seconds
+                        onClose={handleCloseSnackbar}
+                    >
+                        <Alert onClose={handleCloseSnackbar} severity="error">
+                            {error || 'An unexpected error occurred.'}
+                        </Alert>
+                    </Snackbar>
                 </Grid>
             </MainCard>
         </>
