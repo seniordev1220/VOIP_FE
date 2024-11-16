@@ -14,18 +14,15 @@ const PortingTable = Loadable(lazy(() => import('views/forms/did-porting/Porting
 const BuyNewNumber = Loadable(lazy(() => import('views/forms/did-porting/buyNumber')));
 
 // forms validation
-const FrmFormsValidation = Loadable(lazy(() => import('views/forms/forms-validation')));
 const FrmResellerManage = Loadable(lazy(() => import('views/forms/reseller_manage')));
 const FrmAddNewReseller = Loadable(lazy(() => import('views/forms/reseller_manage/add_new_reseller')));
+const FrmMessagingManage = Loadable(lazy(() => import('views/forms/messaging')));
 
 const OutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile')));
 const NewOutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile/add_new_profile')));
 const EditOutboundProfile = Loadable(lazy(() => import('views/forms/voice/outbound_profile/edit_new_profile')));
 
 const AccountSettings = Loadable(lazy(() => import('views/pages/my-account')));
-// chart routing
-const ChartApexchart = Loadable(lazy(() => import('views/forms/chart/Apexchart')));
-const OrgChartPage = Loadable(lazy(() => import('views/forms/chart/OrgChart')));
 
 // basic ui-elements routing
 const BasicUIAccordion = Loadable(lazy(() => import('views/ui-elements/basic/UIAccordion')));
@@ -87,24 +84,16 @@ const MainRoutes = {
         },
 
         {
-            path: 'forms/charts/apexchart',
-            element: <ChartApexchart />
-        },
-        {
-            path: '/forms/charts/orgchart',
-            element: <OrgChartPage />
-        },
-        {
-            path: '/forms/forms-validation',
-            element: <FrmFormsValidation />
-        },
-        {
             path: '/forms/reseller-manage',
             element: <FrmResellerManage />
         },
         {
             path: '/forms/add_new_reseller',
             element: <FrmAddNewReseller />
+        },
+        {
+            path: '/forms/messaging',
+            element: <FrmMessagingManage />
         },
 
         {

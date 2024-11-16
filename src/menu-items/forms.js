@@ -203,24 +203,11 @@ const forms = {
             ]
         },
         {
-            id: 'charts',
+            id: 'forms-wizard',
             title: <FormattedMessage id="msg" />,
-            type: 'collapse',
-            icon: icons.IconMessage,
-            children: [
-                {
-                    id: 'apexchart',
-                    title: <FormattedMessage id="sms" />,
-                    type: 'item',
-                    url: '/forms/charts/apexchart'
-                },
-                {
-                    id: 'organization-chart',
-                    title: <FormattedMessage id="whatsapp" />,
-                    type: 'item',
-                    url: '/forms/charts/orgchart'
-                }
-            ]
+            type: 'item',
+            url: '/forms/messaging',
+            icon: icons.IconMessage
         },
         {
             id: 'voice',
