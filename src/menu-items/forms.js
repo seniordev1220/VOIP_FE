@@ -203,7 +203,7 @@ const forms = {
             ]
         },
         {
-            id: 'forms-wizard',
+            id: 'msg',
             title: <FormattedMessage id="msg" />,
             type: 'item',
             url: '/forms/messaging',
