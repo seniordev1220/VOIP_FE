@@ -26,7 +26,7 @@ const MessagingForm = () => {
 
     const handleSend = async () => {
         try {
-            const res = await fetch('/api/messaging/send', {
+            const res = await fetch('http://66.55.66.7:5000/api/messaging/send', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ to, message, type })
