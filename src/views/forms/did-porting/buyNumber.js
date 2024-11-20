@@ -28,7 +28,7 @@ import { gridSpacing } from 'store/constant';
 import MainCard from 'ui-component/cards/MainCard';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'http://66.55.66.7:5000/api',
     headers: {
         'Content-Type': 'application/json'
     }

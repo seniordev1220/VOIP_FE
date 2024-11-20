@@ -30,23 +30,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconAmbulance, IconRecordMail } from '@tabler/icons';
 
-// Table data
-function createData(number, status, sipCon, billing) {
-    return { number, status, sipCon, billing };
-}
-
-const rows = [
-    createData('+1499654813', 'Active', 'IRSPEI', 'BILL_RDLTELECOM'),
-    createData('+1499654814', 'Active', 'IRSPEI', 'BILL_RDLTELECOM'),
-    createData('+1499654833', 'Port failed', '-', 'BILL_COMBATCOMPUTERS'),
-    createData('+1499654333', 'Active', 'IRSPEI', 'BILL_RDLTELECOM'),
-    createData('+1499655813', 'Port failed', '-', 'BILL_COMBATCOMPUTERS'),
-    createData('+14996532813', 'Active', 'IRSPEI', 'BILL_COMBATCOMPUTERS'),
-    createData('+1499654413', 'Port failed', '-', 'BILL_RDLTELECOM'),
-    createData('+1499623583', 'Port failed', '-', 'BILL_COMBATCOMPUTERS'),
-    createData('+1455654813', 'Active', 'IRSPEI', 'BILL_RDLTELECOM')
-];
-
 // Table filter
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -75,9 +58,8 @@ function stableSort(array, comparator) {
 // Table header
 const headCells = [
     { id: 'number', label: 'Number', minWidth: 170, align: 'left' },
+    { id: 'friendlyName', label: 'FriendlyName', minWidth: 170, align: 'left' },
     { id: 'status', label: 'Status', minWidth: 170, align: 'left' },
-    { id: 'sipCon', label: 'SIP Connection', minWidth: 170, align: 'left' },
-    { id: 'billing', label: 'Billing Group', minWidth: 170, align: 'left' },
     { id: 'services', label: 'Services', minWidth: 170, align: 'center' },
     { id: 'action', label: 'Action', minWidth: 100, align: 'center' }
 ];
@@ -182,8 +164,28 @@ export default function EnhancedTable() {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [selectedRow, setSelectedRow] = React.useState(null);
-    const theme = useTheme();
+    const [rows, setRows] = React.useState([]);
+    const [error, setError] = React.useState([]);
     const navigate = useNavigate();
+
+    const fetchDIDs = async () => {
+        try {
+            const res = await fetch('http://localhost:5000/api/dids/list');
+            const data = await res.json();
+            if (data.success) {
+                console.log(data.data);
+                setRows(data.data);
+            } else {
+                setError(data.message);
+            }
+        } catch (err) {
+            setError('Failed to load DIDs.');
+        }
+    };
+
+    React.useEffect(() => {
+        fetchDIDs();
+    }, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -227,7 +229,7 @@ export default function EnhancedTable() {
     };
 
     const handleEdit = (row) => {
-        console.log(`Editing row: ${row.number}`);
+        console.log(`Editing row: ${row.phoneNumber}`);
     };
 
     const handleDeleteClick = (row) => {
@@ -246,7 +248,7 @@ export default function EnhancedTable() {
     };
 
     const handleServiceClick = (serviceType, row) => {
-        console.log(`Service action for ${serviceType} on row: ${row.number}`);
+        console.log(`Service action for ${serviceType} on row: ${row.phoneNumber}`);
     };
 
     const handleBuyNewNumber = () => {
@@ -292,7 +294,7 @@ export default function EnhancedTable() {
                         {stableSort(rows, getComparator(order, orderBy))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
-                                const isItemSelected = isSelected(row.number);
+                                const isItemSelected = isSelected(row.phoneNumber);
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
@@ -301,12 +303,12 @@ export default function EnhancedTable() {
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.number}
+                                        key={row.phoneNumber}
                                         selected={isItemSelected}
                                     >
                                         <TableCell sx={{ pl: 3 }} padding="checkbox">
                                             <Checkbox
-                                                onClick={(event) => handleCheckboxClick(event, row.number)}
+                                                onClick={(event) => handleCheckboxClick(event, row.phoneNumber)}
                                                 color="primary"
                                                 checked={isItemSelected}
                                                 inputProps={{
@@ -315,11 +317,10 @@ export default function EnhancedTable() {
                                             />
                                         </TableCell>
                                         <TableCell component="th" id={labelId} scope="row" padding="none" sx={{ pr: 10 }}>
-                                            {row.number}
+                                            {row.phoneNumber}
                                         </TableCell>
+                                        <TableCell>{row.friendlyName}</TableCell>
                                         <TableCell>{row.status}</TableCell>
-                                        <TableCell>{row.sipCon}</TableCell>
-                                        <TableCell>{row.billing}</TableCell>
                                         <TableCell align="center">
                                             <Tooltip title="Emergency Services">
                                                 <IconButton onClick={() => handleServiceClick('Emergency Services', row)} size="small">
