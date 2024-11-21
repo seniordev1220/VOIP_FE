@@ -12,6 +12,7 @@ const DashboardAnalytics = Loadable(lazy(() => import('views/dashboard/Analytics
 const DidTable = Loadable(lazy(() => import('views/forms/did-porting/DidTable')));
 const PortingTable = Loadable(lazy(() => import('views/forms/did-porting/PortingTable')));
 const BuyNewNumber = Loadable(lazy(() => import('views/forms/did-porting/buyNumber')));
+const Emergency = Loadable(lazy(() => import('views/forms/did-porting/emergency')));
 
 // forms validation
 const FrmResellerManage = Loadable(lazy(() => import('views/forms/reseller_manage')));
@@ -76,6 +77,10 @@ const MainRoutes = {
         {
             path: '/did-porting/buy_new_number',
             element: <BuyNewNumber />
+        },
+        {
+            path: '/did-porting/emergency',
+            element: <Emergency />
         },
 
         {
