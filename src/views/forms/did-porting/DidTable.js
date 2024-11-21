@@ -170,7 +170,7 @@ export default function EnhancedTable() {
 
     const fetchDIDs = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/dids/list');
+            const res = await fetch('http://66.55.66.7:5000/api/dids/list');
             const data = await res.json();
             if (data.success) {
                 console.log(data.data);
@@ -249,6 +249,7 @@ export default function EnhancedTable() {
 
     const handleServiceClick = (serviceType, row) => {
         console.log(`Service action for ${serviceType} on row: ${row.phoneNumber}`);
+        navigate('/did-porting/emergency', { state: { phoneNumber: row.phoneNumber } });
     };
 
     const handleBuyNewNumber = () => {
